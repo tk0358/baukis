@@ -38,6 +38,8 @@ gem 'bootsnap', '>= 1.1.0', require: false
 
 gem 'kaminari'
 gem 'kaminari-i18n'
+gem 'date_validator'
+gem 'email_validator'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
