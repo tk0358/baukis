@@ -1,11 +1,11 @@
 class StaffMemberPresenter < ModelPresenter
   delegate :suspended?, to: :object
 
-  def full_name(family_name, given_name)
+  def full_name
     object.family_name + ' ' + object.given_name
   end
 
-  def full_name_kana(family_name_kana, given_name_kana)
+  def full_name_kana
     object.family_name_kana + ' ' + object.given_name_kana
   end
 
