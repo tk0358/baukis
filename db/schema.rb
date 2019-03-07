@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_03_05_182215) do
+ActiveRecord::Schema.define(version: 2019_03_07_122601) do
 
   create_table "addresses", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.bigint "customer_id", null: false
@@ -24,8 +24,12 @@ ActiveRecord::Schema.define(version: 2019_03_05_182215) do
     t.string "division_name", default: "", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["city"], name: "index_addresses_on_city"
     t.index ["customer_id"], name: "index_addresses_on_customer_id"
+    t.index ["prefecture", "city"], name: "index_addresses_on_prefecture_and_city"
+    t.index ["type", "city"], name: "index_addresses_on_type_and_city"
     t.index ["type", "customer_id"], name: "index_addresses_on_type_and_customer_id", unique: true
+    t.index ["type", "prefecture", "city"], name: "index_addresses_on_type_and_prefecture_and_city"
   end
 
   create_table "administrators", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -50,8 +54,20 @@ ActiveRecord::Schema.define(version: 2019_03_05_182215) do
     t.string "hashed_password"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "birth_year"
+    t.integer "birth_month"
+    t.integer "birth_mday"
+    t.index ["birth_mday", "family_name_kana", "given_name_kana"], name: "index_customers_on_birth_mday_and_furigana"
+    t.index ["birth_mday", "given_name_kana"], name: "index_customers_on_birth_mday_and_given_name_kana"
+    t.index ["birth_month", "birth_mday"], name: "index_customers_on_birth_month_and_birth_mday"
+    t.index ["birth_month", "family_name_kana", "given_name_kana"], name: "index_customers_on_birth_month_and_furigana"
+    t.index ["birth_month", "given_name_kana"], name: "index_customers_on_birth_month_and_given_name_kana"
+    t.index ["birth_year", "birth_month", "birth_mday"], name: "index_customers_on_birth_year_and_birth_month_and_birth_mday"
+    t.index ["birth_year", "family_name_kana", "given_name_kana"], name: "index_customers_on_birth_year_and_furigana"
+    t.index ["birth_year", "given_name_kana"], name: "index_customers_on_birth_year_and_given_name_kana"
     t.index ["email_for_index"], name: "index_customers_on_email_for_index", unique: true
     t.index ["family_name_kana", "given_name_kana"], name: "index_customers_on_family_name_kana_and_given_name_kana"
+    t.index ["given_name_kana"], name: "index_customers_on_given_name_kana"
   end
 
   create_table "phones", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
