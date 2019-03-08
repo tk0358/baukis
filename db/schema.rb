@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_03_07_122601) do
+ActiveRecord::Schema.define(version: 2019_03_08_113602) do
 
   create_table "addresses", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.bigint "customer_id", null: false
@@ -26,6 +26,7 @@ ActiveRecord::Schema.define(version: 2019_03_07_122601) do
     t.datetime "updated_at", null: false
     t.index ["city"], name: "index_addresses_on_city"
     t.index ["customer_id"], name: "index_addresses_on_customer_id"
+    t.index ["postal_code"], name: "index_addresses_on_postal_code"
     t.index ["prefecture", "city"], name: "index_addresses_on_prefecture_and_city"
     t.index ["type", "city"], name: "index_addresses_on_type_and_city"
     t.index ["type", "customer_id"], name: "index_addresses_on_type_and_customer_id", unique: true
@@ -67,6 +68,7 @@ ActiveRecord::Schema.define(version: 2019_03_07_122601) do
     t.index ["birth_year", "given_name_kana"], name: "index_customers_on_birth_year_and_given_name_kana"
     t.index ["email_for_index"], name: "index_customers_on_email_for_index", unique: true
     t.index ["family_name_kana", "given_name_kana"], name: "index_customers_on_family_name_kana_and_given_name_kana"
+    t.index ["gender", "family_name_kana", "given_name_kana"], name: "index_customers_on_gender_and_furigana"
     t.index ["given_name_kana"], name: "index_customers_on_given_name_kana"
   end
 
@@ -78,8 +80,10 @@ ActiveRecord::Schema.define(version: 2019_03_07_122601) do
     t.boolean "primary", default: false, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "last_four_digits"
     t.index ["address_id"], name: "index_phones_on_address_id"
     t.index ["customer_id"], name: "index_phones_on_customer_id"
+    t.index ["last_four_digits"], name: "index_phones_on_last_four_digits"
     t.index ["number_for_index"], name: "index_phones_on_number_for_index"
   end
 
